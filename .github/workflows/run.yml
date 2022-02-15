@@ -1,0 +1,17 @@
+name: Automated commit bot
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */24 * * *'
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          date +"%D %T" >> commits.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Automated commit"
+          git push
